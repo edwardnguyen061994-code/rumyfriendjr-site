@@ -1,0 +1,57 @@
+{
+  "branding": {
+    "source": "/Users/edward/Downloads/ChatGPT Image Sep 14, 2026, 12_19_10 PM (1).png",
+    "file": "assets/rumy-jr-branding.png",
+    "sha256": "b39ade60c146d8441239ec93ee428ba7231d0a285cdd942be40ce28ec93ff02c"
+  },
+  "games": [
+    {
+      "file": "assets/tap-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/tap-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/tap-poster.jpg",
+      "sha256": "b1c74fca80b5600b8fc214305bbca0eda910ce866840e6b9cc52b336c54d68bc"
+    },
+    {
+      "file": "assets/ball-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/ball-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/ball-poster.jpg",
+      "sha256": "45abd7a6785f426d17be88de5ea7cf324b708dc3b511b035abad0473288eac5d"
+    },
+    {
+      "file": "assets/amaze-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/amaze-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/amaze-poster.jpg",
+      "sha256": "ac203cd09d2b9835fd2b899535137cb80c052168288ed25fa64f64740a8651a3"
+    },
+    {
+      "file": "assets/build-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/build-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/build-poster.jpg",
+      "sha256": "53155e143212fa4c0d0df8aa2f02f6d9d8d692071ca5e80530ec629c70ce6b88"
+    },
+    {
+      "file": "assets/spell-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/spell-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/spell-poster.jpg",
+      "sha256": "1bdd225a6e4c72e2cab3c4249596c5c13b71e14dfb25e0909f6c52aa24a9ac68"
+    },
+    {
+      "file": "assets/race-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/race-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/race-poster.jpg",
+      "sha256": "da8909c1dad9cada6789f05446838cf7c5f3e4ebeb50c29f0d6ebb1147b993ae"
+    },
+    {
+      "file": "assets/match-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/match-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/match-poster.jpg",
+      "sha256": "a0b485b3805cf21ff238a77600fe9c03f6c4fee8c89955d851fa6f1e7e6e00b9"
+    },
+    {
+      "file": "assets/dog-poster.jpg",
+      "source": "/Users/edward/Desktop/SeeEm/site-new/assets/games/dog-poster.jpg",
+      "public_reference": "https://jr.rumyfriend.com/assets/games/dog-poster.jpg",
+      "sha256": "b9431a8b505830699fd0a856718fc841fdf13c2ef967cbe309f9a6f00d7ec161"
+    }
+  ]
+}

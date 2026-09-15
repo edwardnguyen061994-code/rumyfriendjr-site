@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A world of games for ages 4–12. Discover RumyFriend Jr and find your next favorite game.">
+  <meta name="theme-color" content="#074f3b">
+  <meta name="referrer" content="no-referrer">
+  <link rel="canonical" href="https://www.rumyfriendjr.com/">
+  <title>Welcome to RumyFriend Jr</title>
+  <style>
+    :root{color-scheme:light;--green:#07513c;--deep:#12382d;--mint:#d9eee0;--cream:#fbfaf3;--muted:#5a7065;--line:#dfe5d9}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--deep);font-family:ui-rounded,"Avenir Next",Avenir,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:3px solid #ed9d30;outline-offset:5px}button{font:inherit}img{display:block;max-width:100%}
+    .wrap{width:min(1160px,calc(100% - 64px));margin:auto}.skip{position:absolute;left:16px;top:-80px;background:white;padding:12px;z-index:5}.skip:focus{top:12px}
+    .masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:27px 0 23px}.wordmark{text-decoration:none;font-size:23px;font-weight:850;letter-spacing:-1.1px}.wordmark span{color:#b77825;margin-left:3px}.age{font-size:12px;font-weight:750;letter-spacing:.07em;text-transform:uppercase;border:1px solid #ccd9ca;border-radius:100px;padding:8px 13px;background:#eff3e7}
+    .hero{position:relative;overflow:hidden;border-radius:28px;background:#07513c;box-shadow:0 12px 40px #20452d14}.hero img{width:100%;height:auto;aspect-ratio:2172/724;object-fit:contain}.intro{display:flex;align-items:center;justify-content:space-between;gap:38px;padding:34px 7px 35px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;font-weight:850;text-transform:uppercase;color:#67836e;margin:0 0 8px}h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(31px,3.35vw,46px);font-weight:normal;letter-spacing:-1.6px;line-height:1.12;margin:0 0 11px}.intro p.description{font-size:15px;line-height:1.6;color:var(--muted);max-width:570px;margin:0}
+    .go-panel{flex:0 0 243px;text-align:center}.go{display:inline-flex;align-items:center;justify-content:center;gap:20px;background:var(--green);color:white;text-decoration:none;border-radius:100px;min-height:55px;padding:14px 26px;font-size:15px;font-weight:750;box-shadow:0 5px 0 #043c2c;transition:transform .15s,background .15s}.go:hover{background:#0b674c;transform:translateY(-2px)}.go-panel .go{width:100%}.go .arrow{font-size:21px;line-height:1}
+    .redirect-status{font-size:12px;color:var(--muted);margin:15px 0 0;line-height:1.5;min-height:18px}.stay{border:0;background:transparent;color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:12px;padding:8px 10px;cursor:pointer}.stay[hidden]{display:none}
+    .games{border-top:1px solid var(--line);padding:31px 0 41px}.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:22px}h2{font-size:25px;letter-spacing:-.8px;margin:0;font-weight:800}.section-title p{font-size:13px;color:var(--muted);margin:0}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:25px 20px}.game{margin:0;min-width:0}.art{overflow:hidden;border-radius:20px;box-shadow:0 4px 16px #163c2410;background:var(--mint);aspect-ratio:1}.art img{height:100%;width:100%;object-fit:cover;transition:transform .25s}.game:hover img{transform:scale(1.035)}.game figcaption{padding:12px 3px 0}.game h3{font-size:17px;letter-spacing:-.3px;margin:0 0 3px}.game p{font-size:12px;line-height:1.45;color:var(--muted);margin:0}
+    .finish{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:25px 31px;border:1px solid #d8e6d6;background:#eaf2e5;border-radius:23px;margin:0 0 31px}.finish h2{font-family:Georgia,serif;font-weight:normal;font-size:29px;letter-spacing:-.7px;margin-bottom:5px}.finish p{font-size:13px;color:var(--muted);margin:0}.finish .go{flex:none;min-height:47px;font-size:13px;box-shadow:none}
+    footer{display:flex;justify-content:space-between;gap:20px;padding:0 3px 28px;color:#718076;font-size:11px}footer a{text-underline-offset:3px}.no-js{font-size:12px;color:var(--muted);margin-top:10px}
+    @media(max-width:760px){.wrap{width:calc(100% - 34px)}.masthead{padding:22px 1px 18px}.wordmark{font-size:21px}.age{font-size:10px;padding:7px 10px}.hero{border-radius:19px}.intro{display:block;padding:24px 2px 28px}h1{font-size:36px;letter-spacing:-1.2px}.intro p.description{font-size:14px}.go-panel{text-align:left;max-width:340px;margin-top:21px}.go-panel .go{width:auto;min-width:205px}.redirect-status{margin-top:14px;display:inline-block}.stay{display:block;padding:7px 0}.games{padding-top:25px}.section-title{display:block;margin-bottom:19px}.section-title h2{font-size:23px}.section-title p{margin-top:5px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:23px 14px}.art{border-radius:16px}.game h3{font-size:16px}.game p{font-size:11px}.finish{display:block;padding:25px 22px}.finish .go{margin-top:19px}.finish h2{font-size:28px}footer{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="wrap">
+    <header class="masthead">
+      <a class="wordmark" href="https://jr.rumyfriend.com/" aria-label="RumyFriend Jr games">RumyFriend<span>Jr</span></a>
+      <span class="age">For ages 4–12</span>
+    </header>
+    <main id="main">
+      <div class="hero">
+        <img src="assets/rumy-jr-branding.png" width="2172" height="724" fetchpriority="high" alt="RumyFriend Jr: a wizard, cheerleader, soccer player, ice prince, raccoon ranger and alien around the green Rjr logo.">
+      </div>
+      <section class="intro" aria-labelledby="welcome-title">
+        <div>
+          <p class="eyebrow">Your next adventure starts here</p>
+          <h1>Little players. Big adventures.</h1>
+          <p class="description">Familiar faces. Colorful worlds. A whole collection of games to explore.<br>Come find your next favorite at RumyFriend Jr.</p>
+        </div>
+        <div class="go-panel">
+          <a class="go" href="https://jr.rumyfriend.com/">Go to Rumy JR <span class="arrow" aria-hidden="true">↗</span></a>
+          <p class="redirect-status">Free to play in your browser.</p>
+          <noscript><p class="no-js">Use “Go to Rumy JR” whenever you're ready.</p></noscript>
+        </div>
+      </section>
+      <section class="games" aria-labelledby="games-title">
+        <div class="section-title"><h2>A little look at the fun.</h2><p>A few familiar faces and worlds from our games.</p></div>
+        <div class="grid">
+          <figure class="game"><div class="art"><img src="assets/tap-poster.jpg" alt="Portrait tiles with the Rumy Jr wizard, cheerleader, soccer player and raccoon." width="600" height="600" loading="lazy"></div><figcaption><h3>Tap ’Em</h3><p>Familiar faces. Playful tiles.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/ball-poster.jpg" alt="The soccer player and cheerleader on a colorful neon court." width="600" height="600" loading="lazy"></div><figcaption><h3>Ball ’Em</h3><p>A splash of stadium magic.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/amaze-poster.jpg" alt="A tiny winding green hedge maze with a finish flag." width="600" height="600" loading="lazy"></div><figcaption><h3>Amaze ’Em</h3><p>A world of twists and turns.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/build-poster.jpg" alt="A miniature island landscape with a blue river, mountains and trees." width="600" height="600" loading="lazy"></div><figcaption><h3>Build ’Em</h3><p>An island of possibilities.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/spell-poster.jpg" alt="A duck scholar and elf beside glowing letter tiles." width="600" height="600" loading="lazy"></div><figcaption><h3>Spell ’Em</h3><p>Words with a little wonder.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/race-poster.jpg" alt="Tiny colorful race cars and a checkered arch on a winding track." width="600" height="600" loading="lazy"></div><figcaption><h3>Race ’Em</h3><p>Little cars. Big adventures.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/match-poster.jpg" alt="A board of colorful crown, star, leaf, droplet and flame puzzle pieces." width="600" height="600" loading="lazy"></div><figcaption><h3>Match ’Em</h3><p>A rainbow of little discoveries.</p></figcaption></figure>
+          <figure class="game"><div class="art"><img src="assets/dog-poster.jpg" alt="Playful dogs chasing colorful flying discs in a grassy park." width="600" height="600" loading="lazy"></div><figcaption><h3>Dog ’Em</h3><p>Playful pups, ready for fun.</p></figcaption></figure>
+        </div>
+      </section>
+      <section class="finish" aria-label="Continue to the Jr games">
+        <div><h2>Found your kind of fun?</h2><p>Explore these games and more at jr.rumyfriend.com.</p></div>
+        <a class="go" href="https://jr.rumyfriend.com/">Explore all Jr games <span class="arrow" aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+    <footer><span>RumyFriend Jr · A world of games for ages 4–12.</span><a href="https://jr.rumyfriend.com/terms">Terms of Use</a></footer>
+  </div>
+</body>
+</html>
