@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070B16">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/assets/jr-logo.png" type="image/png">
+<link rel="canonical" href="https://www.rumyfriendjr.com/privacy/">
+<title>Website privacy &mdash; RumyFriend Jr</title>
+<style>
+@font-face{font-family:Bricolage;src:url(/fonts/BricolageGrotesque-ExtraBold.woff2)format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:Jakarta;src:url(/fonts/PlusJakartaSans-Medium.woff2)format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:Jakarta;src:url(/fonts/PlusJakartaSans-ExtraBold.woff2)format('woff2');font-weight:800;font-display:swap}
+:root{color-scheme:dark;--light:#E9EBE3;--dim:rgba(233,235,227,.70);--hair:rgba(255,255,255,.10);--chip:rgba(14,18,32,.70)}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0B1226,#070B16);min-height:100vh;color:var(--light);
+font:500 16px/1.65 Jakarta,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{width:min(720px,calc(100% - 40px));margin:auto;padding:26px 0 70px}
+header{display:flex;align-items:center;gap:9px;padding:6px 0 30px}
+header img{width:30px;height:30px;border-radius:9px}
+header span{font:800 17px/1 Bricolage,Jakarta,sans-serif;letter-spacing:-.4px}
+h1{font:800 clamp(28px,5vw,38px)/1.15 Bricolage,Jakarta,sans-serif;letter-spacing:-.8px;margin:0 0 8px}
+.upd{color:var(--dim);font-size:13px;margin:0 0 30px}
+h2{font:800 20px/1.25 Jakarta,sans-serif;margin:34px 0 10px}
+p,li{color:var(--dim);margin:0 0 14px}
+strong{color:var(--light)}
+a{color:#FFC133}
+ul{padding-left:20px}
+.box{border:1px solid var(--hair);background:var(--chip);border-radius:16px;padding:18px 20px;margin:24px 0}
+.box p:last-child{margin-bottom:0}
+footer{border-top:1px solid var(--hair);margin-top:44px;padding-top:20px;font-size:13px;color:var(--dim);
+display:flex;flex-wrap:wrap;gap:8px 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><img src="/assets/jr-logo.png" width="512" height="512" alt=""><span>RumyFriend Jr</span></header>
+<h1>Privacy on this website</h1>
+<p class="upd">Last updated {{PUBLISH_DATE}}</p>
+
+<p>This page is about <strong>www.rumyfriendjr.com, this website only</strong>. The RumyFriend Jr app collects information in order to work, and it has its own Children&rsquo;s Privacy Notice covering that. This page does not describe the app.</p>
+
+<h2>What this website collects</h2>
+<p><strong>Nothing.</strong> There is no sign-in, no form, no newsletter box and no comment field anywhere on this site. We set no cookies. We run no analytics, no advertising and no third-party scripts &mdash; every image, font and video on the site is served from this domain, so loading a page tells nobody else that you visited.</p>
+<p>The one piece of JavaScript on the site starts and pauses the short game preview videos as you scroll. It stores nothing and sends nothing.</p>
+
+<h2>Server logs</h2>
+<p>This site is hosted on GitHub Pages. Like any web host, GitHub records ordinary request information such as IP address, in order to serve the site and protect it from abuse. We do not receive, access or store those logs, and we do not use them to build a profile of anyone. GitHub&rsquo;s handling of that data is described in their own privacy statement.</p>
+
+<h2>Links to the games</h2>
+<p>Each game on this site is hosted on its own address and opens in a new page. Once you leave this site you are on that game&rsquo;s page, and what it collects is described by its own terms. We send no information about you along with the link: the site sets <code>referrer: no-referrer</code>, so the game is not told which page you came from.</p>
+
+<h2>Children</h2>
+<p>This site is aimed at parents and at children aged 4&ndash;12, and it is built so that visiting it creates no record we hold. If you believe we have somehow collected information from a child through this website, email {{PRIVACY_EMAIL}} and we will delete it.</p>
+
+<h2>Contact</h2>
+<p>{{LEGAL_NAME}}<br>{{POSTAL_ADDRESS}}<br>{{TELEPHONE}}<br>{{PRIVACY_EMAIL}}</p>
+<footer><a href="/">Games</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a><a href="/delete/">Delete your data</a></footer>
+</div>
+</body>
+</html>

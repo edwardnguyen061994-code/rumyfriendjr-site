@@ -100,11 +100,14 @@ animation:spark 7s ease-in-out infinite;will-change:transform,opacity}
 .hero h1{font:800 clamp(28px,4.4vw,44px)/1.06 Bricolage,Jakarta,sans-serif;letter-spacing:-.53px;margin:0 0 12px}
 .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ctas{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.stores{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
-.stores .badge{display:inline-flex;align-items:center;height:40px;opacity:.72}
-.stores .badge img{height:40px;width:auto;display:block}
-.stores .soon{font:800 10px/1 Jakarta,sans-serif;letter-spacing:.14em;text-transform:uppercase;
-color:var(--dim);border:1px solid var(--hair);background:var(--chip);border-radius:999px;padding:7px 11px}
+.stores{margin-top:18px}
+.stores .soon{font:800 10.5px/1 Jakarta,sans-serif;letter-spacing:.2em;text-transform:uppercase;
+color:var(--dim);margin:0 0 9px}
+.badgerow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;justify-content:center;height:60px;opacity:.9}
+.badge img{width:auto;display:block}
+.badge.apple img{height:40px}
+.badge.google img{height:60px}
 .gold{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 18px;border-radius:999px;
 background:var(--gold);color:#3A2600;font:700 14px/1 Jakarta,sans-serif;box-shadow:0 12px 30px -8px rgba(255,178,32,.70)}
 .glass{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px;border-radius:999px;
@@ -219,9 +222,11 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;paddin
     <h1>Party games that reveal <em>personality</em></h1>
     <div class="ctas"><a class="gold" href="#games">Play a game</a><a class="glass" href="#how">How it works</a></div>
     <div class="stores">
-      <span class="badge"><img src="assets/badge-appstore.svg" width="120" height="40" alt="Download on the App Store" loading="lazy"></span>
-      <span class="badge"><img src="assets/badge-googleplay.png" width="646" height="250" alt="Get it on Google Play" loading="lazy"></span>
-      <span class="soon">Coming soon</span>
+      <p class="soon">Coming soon</p>
+      <div class="badgerow">
+        <span class="badge apple"><img src="assets/badge-appstore.svg" width="120" height="40" alt="Download on the App Store" loading="lazy"></span>
+        <span class="badge google"><img src="assets/badge-googleplay.png" width="646" height="250" alt="Get it on Google Play" loading="lazy"></span>
+      </div>
     </div>
   </div>
 </div>
