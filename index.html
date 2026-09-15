@@ -59,14 +59,52 @@ img{display:block;max-width:100%}
 border:1px solid var(--hair);background:var(--chip);border-radius:999px;padding:7px 11px}
 /* hero -- games_lobby.dart:447-643 */
 .hero{position:relative;background:#04050C;margin-top:18px}
-.heroart{position:relative;aspect-ratio:2172/724}
-.heroart img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.heroart{position:relative;aspect-ratio:2172/724;overflow:hidden}
+.heroart img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;
+transform-origin:50% 55%;animation:kenburns 28s ease-in-out infinite alternate;will-change:transform}
+@keyframes kenburns{from{transform:scale(1)translate3d(0,0,0)}to{transform:scale(1.055)translate3d(-0.8%,-0.6%,0)}}
+
+/* The app's Jr hero fallback paints a central white bloom and nine sparkle
+   glyphs over a violet ground (games_lobby.dart _JrHeroFallback). The banner
+   is finished art, so the same two devices are layered over it instead of
+   replacing it -- the bloom breathing behind the Rjr tile, the sparkles
+   drifting and twinkling at the app's own nine sizes. */
+.bloom{position:absolute;left:50%;top:50%;width:62%;height:92%;transform:translate(-50%,-50%);
+pointer-events:none;background:radial-gradient(closest-side,rgba(255,255,255,.22),transparent 70%);
+animation:breathe 9s ease-in-out infinite;will-change:opacity,transform}
+@keyframes breathe{0%,100%{opacity:.55;transform:translate(-50%,-50%)scale(.94)}
+50%{opacity:1;transform:translate(-50%,-50%)scale(1.06)}}
+
+.sparks{position:absolute;inset:0;pointer-events:none}
+.sparks i{position:absolute;display:block;color:#fff;font-style:normal;line-height:1;
+text-shadow:0 0 14px rgba(255,255,255,.75);opacity:0;
+animation:spark 7s ease-in-out infinite;will-change:transform,opacity}
+.sparks i::before{content:"º6"}
+@keyframes spark{0%,100%{opacity:0;transform:translate3d(0,6px,0)scale(.6)rotate(0deg)}
+18%{opacity:.95}
+50%{opacity:.35;transform:translate3d(0,-10px,0)scale(1.08)rotate(28deg)}
+82%{opacity:.9}}
+.sparks i:nth-child(1){left:7%;top:22%;font-size:clamp(20px,2.82vw,62px);animation-delay:0.0s}
+.sparks i:nth-child(2){left:16%;top:68%;font-size:clamp(13px,1.82vw,40px);animation-delay:2.4s}
+.sparks i:nth-child(3){left:27%;top:12%;font-size:clamp(11px,1.55vw,34px);animation-delay:4.1s}
+.sparks i:nth-child(4){left:35%;top:78%;font-size:clamp(10px,1.36vw,30px);animation-delay:1.2s}
+.sparks i:nth-child(5){left:62%;top:16%;font-size:clamp(9px,1.27vw,28px);animation-delay:5.3s}
+.sparks i:nth-child(6){left:70%;top:72%;font-size:clamp(7px,1.00vw,22px);animation-delay:3.0s}
+.sparks i:nth-child(7){left:79%;top:28%;font-size:clamp(7px,0.91vw,20px);animation-delay:6.1s}
+.sparks i:nth-child(8){left:88%;top:62%;font-size:clamp(7px,0.82vw,18px);animation-delay:1.8s}
+.sparks i:nth-child(9){left:94%;top:18%;font-size:clamp(7px,0.73vw,16px);animation-delay:3.7s}
+@media(max-width:760px){.sparks i{transform:scale(.7)}}
 .heroart::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,4,11,0)62%,rgba(4,5,12,.55))}
 .herocopy{padding:16px 17px 20px}
 .eyebrow{font:800 12px/1 Jakarta,sans-serif;letter-spacing:3.6px;margin:0 0 10px}
 .hero h1{font:800 clamp(28px,4.4vw,44px)/1.06 Bricolage,Jakarta,sans-serif;letter-spacing:-.53px;margin:0 0 12px}
 .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ctas{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stores{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stores .badge{display:inline-flex;align-items:center;height:40px;opacity:.72}
+.stores .badge img{height:40px;width:auto;display:block}
+.stores .soon{font:800 10px/1 Jakarta,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+color:var(--dim);border:1px solid var(--hair);background:var(--chip);border-radius:999px;padding:7px 11px}
 .gold{display:inline-flex;align-items:center;gap:7px;height:46px;padding:0 18px;border-radius:999px;
 background:var(--gold);color:#3A2600;font:700 14px/1 Jakarta,sans-serif;box-shadow:0 12px 30px -8px rgba(255,178,32,.70)}
 .glass{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px;border-radius:999px;
@@ -158,7 +196,8 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;paddin
 @media(max-width:760px){.wrap{width:calc(100% - 36px)}.cats,.grid{grid-template-columns:1fr}.hero h1{font-size:33.5px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
 *,*::before,*::after{transition:none!important;animation:none!important}
-.art video,.herowrap video{display:none}}
+.art video,.herowrap video{display:none}
+.bloom,.sparks{display:none}}
 </style>
 </head>
 <body>
@@ -172,11 +211,18 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;paddin
 <input class="gr" type="radio" name="genre" id="f-all" checked><input class="gr" type="radio" name="genre" id="f-arcade"><input class="gr" type="radio" name="genre" id="f-deduction"><input class="gr" type="radio" name="genre" id="f-puzzle"><input class="gr" type="radio" name="genre" id="f-racing"><input class="gr" type="radio" name="genre" id="f-social"><input class="gr" type="radio" name="genre" id="f-strategy"><input class="gr" type="radio" name="genre" id="f-trivia"><input class="gr" type="radio" name="genre" id="f-word">
 <div class="wrap">
 <div class="hero">
-  <div class="heroart"><img src="assets/rumy-jr-branding.png" width="2172" height="724" alt="RumyFriend Jr: a wizard, cheerleader, soccer player, ice prince, raccoon ranger and alien around the green Rjr logo." fetchpriority="high"></div>
+  <div class="heroart"><img src="assets/rumy-jr-branding.png" width="2172" height="724" alt="RumyFriend Jr: a wizard, cheerleader, soccer player, ice prince, raccoon ranger and alien around the green Rjr logo." fetchpriority="high">
+  <span class="bloom" aria-hidden="true"></span>
+  <span class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
   <div class="herocopy">
     <p class="eyebrow">PLAY. LAUGH. DISCOVER.</p>
     <h1>Party games that reveal <em>personality</em></h1>
     <div class="ctas"><a class="gold" href="#games">Play a game</a><a class="glass" href="#how">How it works</a></div>
+    <div class="stores">
+      <span class="badge"><img src="assets/badge-appstore.svg" width="120" height="40" alt="Download on the App Store" loading="lazy"></span>
+      <span class="badge"><img src="assets/badge-googleplay.png" width="646" height="250" alt="Get it on Google Play" loading="lazy"></span>
+      <span class="soon">Coming soon</span>
+    </div>
   </div>
 </div>
 </div>
