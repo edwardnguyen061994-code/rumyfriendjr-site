@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://www.rumyfriendjr.com/assets/rumy-jr-branding.png">
 <link rel="icon" href="assets/jr-logo.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/jr-logo.png">
-<link rel="preload" as="image" href="assets/rumy-jr-branding.png" fetchpriority="high">
+<link rel="preload" as="image" href="assets/hero-jr-poster.jpg" fetchpriority="high">
 <title>RumyFriend Jr — Games</title>
 <style>
 @font-face{font-family:Bricolage;src:url(fonts/BricolageGrotesque-ExtraBold.woff2)format('woff2');font-weight:800;font-display:swap}
@@ -63,7 +63,7 @@ border-bottom:1px solid rgba(255,193,51,.45);padding-bottom:2px}
 border:1px solid var(--hair);background:var(--chip);border-radius:999px;padding:7px 11px}
 /* hero -- games_lobby.dart:447-643 */
 .hero{position:relative;background:#04050C;margin-top:18px}
-.heroart{position:relative;aspect-ratio:2172/724;overflow:hidden}
+.heroart{position:relative;aspect-ratio:16/9;overflow:hidden}
 .heroart img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;
 transform-origin:50% 55%;animation:kenburns 28s ease-in-out infinite alternate;will-change:transform}
 @keyframes kenburns{from{transform:scale(1)translate3d(0,0,0)}to{transform:scale(1.055)translate3d(-0.8%,-0.6%,0)}}
@@ -161,8 +161,8 @@ transition:transform .14s cubic-bezier(.16,1,.3,1)}
 .gold:hover{transform:translateY(-2px)}
 .cat{transition:transform .25s cubic-bezier(.16,1,.3,1)}
 .cat:hover{transform:translateY(-3px)}
-.herowrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
-.herowrap video[src]{opacity:1}
+.herowrap video,.heroart video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+.herowrap video[src],.heroart video[src]{opacity:1}
 .scrim{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,14,28,.45))}
 .pill{position:absolute;left:10px;bottom:10px;padding:4px 10px;border-radius:999px;background:var(--chip);
 border:1px solid var(--hair);font:700 11.5px/1 Jakarta,sans-serif;color:var(--light)}
@@ -206,7 +206,7 @@ footer a:hover{color:var(--light);border-bottom-color:rgba(255,193,51,.6)}
 @media(max-width:760px){.wrap{width:calc(100% - 36px)}.cats,.grid{grid-template-columns:1fr}.hero h1{font-size:33.5px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
 *,*::before,*::after{transition:none!important;animation:none!important}
-.art video,.herowrap video{display:none}
+.art video,.herowrap video,.heroart video{display:none}
 .bloom,.sparks{display:none}}
 </style>
 </head>
@@ -221,7 +221,7 @@ footer a:hover{color:var(--light);border-bottom-color:rgba(255,193,51,.6)}
 <input class="gr" type="radio" name="genre" id="f-all" checked><input class="gr" type="radio" name="genre" id="f-arcade"><input class="gr" type="radio" name="genre" id="f-deduction"><input class="gr" type="radio" name="genre" id="f-puzzle"><input class="gr" type="radio" name="genre" id="f-racing"><input class="gr" type="radio" name="genre" id="f-social"><input class="gr" type="radio" name="genre" id="f-strategy"><input class="gr" type="radio" name="genre" id="f-trivia"><input class="gr" type="radio" name="genre" id="f-word">
 <div class="wrap">
 <div class="hero">
-  <div class="heroart"><img src="assets/rumy-jr-branding.png" width="2172" height="724" alt="RumyFriend Jr: a wizard, cheerleader, soccer player, ice prince, raccoon ranger and alien around the green Rjr logo." fetchpriority="high">
+  <div class="heroart"><img src="assets/hero-jr-poster.jpg" width="1280" height="720" alt="RumyFriend Jr: a wizard, cheerleader, soccer player, ice prince, raccoon ranger and alien around the green Rjr logo." fetchpriority="high"><video data-src="assets/hero-jr-loop.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
   <span class="bloom" aria-hidden="true"></span>
   <span class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
   <div class="herocopy">
