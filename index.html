@@ -107,7 +107,7 @@
 
   /* ---- Friends rail -------------------------------------------------- */
   .jr-rail{position:fixed;left:0;top:0;bottom:0;z-index:40;display:flex;align-items:flex-start;}
-  .jr-rail-toggle{position:fixed;left:14px;top:14px;z-index:41;display:flex;align-items:center;gap:8px;
+  .jr-rail-toggle{position:fixed;left:14px;top:76px;z-index:41;display:flex;align-items:center;gap:8px;
     min-height:52px;padding:10px 16px;border:0;border-radius:999px;cursor:pointer;
     background:#fffdf7;color:#1f2a1d;box-shadow:0 6px 20px #0002;
     font:700 17px/1.2 "Hanken Grotesk",system-ui;}
@@ -143,7 +143,8 @@
   }
 
   /* ---- Ranks overlay --------------------------------------------------- */
-  .jr-ranks-toggle{top:76px;}
+  /* Ranks sits ABOVE Friends: it is the thing a child opens most. */
+  .jr-ranks-toggle{top:14px;}
   .jr-ranks{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;
     background:#1f2a1dcc;}
   .jr-ranks-card{width:min(900px,100%);max-height:86vh;overflow:auto;-webkit-overflow-scrolling:touch;
@@ -164,6 +165,7 @@
   .jr-rankempty{margin:0;font:500 15px/1.5 "Hanken Grotesk",system-ui;color:#6b7a67;}
   /* One column on a phone: two columns of scores at 375px is unreadable. */
   @media (max-width:640px){ .jr-ranks-grid{grid-template-columns:1fr;} }
+  /* On a phone the stack inverts too: Ranks sits above Friends. */
   @media (max-width:767px){ .jr-ranks-toggle{top:auto;bottom:calc(78px + env(safe-area-inset-bottom,0px));} }
 
   .prow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
@@ -382,13 +384,19 @@
       msg.textContent = "Sign in to see your friends.";
       return;
     }
-    fetch("/api/jr/friends", { credentials: "include" })
+    var fctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var ftimer = setTimeout(function(){ if (fctrl) fctrl.abort(); }, 8000);
+    fetch("https://jr.rumyfriend.com/api/jr/friends", fctrl
+      ? { credentials: "include", signal: fctrl.signal }
+      : { credentials: "include" })
       .then(function(r){ return r.json(); })
       .then(function(d){
+        clearTimeout(ftimer);
         if (!d || d.ok !== true) { msg.textContent = "Sign in to see your friends."; return; }
         draw(Array.isArray(d.friends) ? d.friends : []);
       })
       .catch(function(){
+        clearTimeout(ftimer);
         loaded = false;   // a dropped request should not permanently empty the drawer
         msg.textContent = "Could not load your friends. Try again.";
       });
@@ -457,14 +465,22 @@
   function loadRanks(){
     if (ranksLoaded || !ranksMsg) return;
     ranksLoaded = true;
-    fetch("/api/jr/ranks", { credentials: "include" })
+    // A request that never answers used to leave a child staring at
+    // "Loading..." with nothing to do. Bound it, and say so.
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = setTimeout(function(){ if (ctrl) ctrl.abort(); }, 8000);
+    fetch("https://jr.rumyfriend.com/api/jr/ranks", ctrl
+      ? { credentials: "include", signal: ctrl.signal }
+      : { credentials: "include" })
       .then(function(r){ return r.json(); })
       .then(function(d){
+        clearTimeout(timer);
         drawRanks(d && Array.isArray(d.games) ? d.games : []);
       })
       .catch(function(){
-        ranksLoaded = false;
-        ranksMsg.textContent = "Could not load top scores. Try again.";
+        clearTimeout(timer);
+        ranksLoaded = false;   // closing and reopening tries again
+        ranksMsg.textContent = "Could not load top scores. Close this and tap Ranks again.";
       });
   }
 

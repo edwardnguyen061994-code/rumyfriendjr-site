@@ -130,7 +130,22 @@ def rewrite(html: str) -> str:
     # Flatten the asset layout. This also catches the path built inside the
     # live-lobby script ('/assets/games/' + art + '-poster.jpg').
     html = html.replace("/assets/games/", "/assets/")
-    html = html.replace("'/api/live-lobbies?jr=1'", f"'{LIVE_API}'")
+    # EVERY same-origin /api/ call, not a named list of them.
+    #
+    # This used to rewrite the single literal '/api/live-lobbies?jr=1'. The
+    # gospel then grew Friends and Ranks, whose fetches came through untouched
+    # and pointed at this host, which serves no API -- so the "Top scores"
+    # dialog sat on "Loading..." forever. A rewrite that has to be extended by
+    # hand every time the gospel gains an endpoint is a rewrite that will be
+    # wrong again, so it matches the shape instead.
+    #
+    # Those two send `credentials: "include"`, which a browser refuses against
+    # a wildcard CORS header. The Worker answers this exact origin with
+    # `access-control-allow-origin: https://www.rumyfriendjr.com` and
+    # `access-control-allow-credentials: true` (verified 2026-09-17), so the
+    # credentialed cross-origin call is allowed. If that ever reverts to `*`,
+    # Friends and Ranks go blank here and nowhere else.
+    html = re.sub(r"""(["'])/api/""", r"\1" + GOSPEL.rstrip("/") + "/api/", html)
     html = html.replace('href="/rankings"', f'href="{RANKINGS}"')
 
     # Between Live games and the game grid: after what is happening now, before
@@ -151,8 +166,10 @@ def check(html: str) -> None:
     problems = []
     if "/assets/games/" in html:
         problems.append("an unflattened /assets/games/ path survived")
-    if "'/api/live-lobbies" in html:
-        problems.append("the live-lobby fetch is still relative and will 404")
+    # Any surviving same-origin /api/ is a dialog that will hang on "Loading…".
+    stragglers = re.findall(r"""["']/api/[A-Za-z0-9/?=&_-]*""", html)
+    if stragglers:
+        problems.append(f"relative API calls survived: {sorted(set(stragglers))}")
     if 'href="/rankings"' in html:
         problems.append("/rankings still points at a page this host does not have")
 
