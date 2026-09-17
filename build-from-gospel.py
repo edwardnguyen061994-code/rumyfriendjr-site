@@ -88,6 +88,29 @@ PREVIEWS_HTML = """<section class="previews panel" aria-labelledby="previews-hea
 
   """
 
+# A bug carried over from the gospel, fixed here rather than reproduced.
+#
+# `#jr-ranks` is the Top scores dialog. It ships with the `hidden` attribute and
+# the placeholder text "Loading…", and is meant to appear only when Ranks is
+# clicked. But its rule `.jr-ranks{display:grid}` is more specific than the UA's
+# `[hidden]{display:none}`, so the attribute does nothing: a fixed, full-viewport
+# panel at z-index 60 sits over the page from first paint, permanently reading
+# "Top scores — Loading…". Nothing ever loads, because the fetch only runs on the
+# click that was never needed to reveal it.
+#
+# Measured on both hosts on 2026-09-17 -- jr.rumyfriend.com does this too, so
+# this is a DIVERGENCE FROM THE GOSPEL ON PURPOSE. Hand it to whoever owns the
+# Worker; until they take it, this page should not show children a dialog they
+# cannot dismiss.
+#
+# Written against the attribute rather than the id so a future dialog with the
+# same mistake is covered. Of the three [hidden] elements on the page, only
+# jr-ranks is currently affected; the other two already compute to display:none
+# and this changes nothing for them.
+HIDDEN_FIX_CSS = """
+  [hidden]{display:none !important;}
+"""
+
 # Written in the page's own variables (--card, --line, --ink2) so the section
 # cannot drift from the palette if the gospel restyles.
 PREVIEWS_CSS = """
@@ -157,7 +180,7 @@ def rewrite(html: str) -> str:
 
     if "</style>" not in html:
         raise SystemExit("no </style> to append the preview rules to")
-    html = html.replace("</style>", PREVIEWS_CSS + "</style>", 1)
+    html = html.replace("</style>", PREVIEWS_CSS + HIDDEN_FIX_CSS + "</style>", 1)
     return html
 
 
@@ -197,6 +220,10 @@ def check(html: str) -> None:
             problems.append(f"preview section incomplete: {needed} missing")
     if 'preload="none"' not in html:
         problems.append("previews would preload; 70MB on a child's phone connection")
+    if "[hidden]{display:none !important;}" not in html:
+        problems.append(
+            "the [hidden] fix is gone; the Top scores dialog will cover the page"
+        )
 
     if problems:
         for p in problems:
