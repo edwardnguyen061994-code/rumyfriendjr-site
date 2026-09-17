@@ -44,6 +44,65 @@ OUT = "index.html"
 LIVE_API = "https://jr.rumyfriend.com/api/live-lobbies?jr=1"
 RANKINGS = "https://jr.rumyfriend.com/rankings"
 
+# ---------------------------------------------------------------------------
+# The one deliberate difference from the gospel.
+#
+# The owner asked on 2026-09-17 for the Balance 'Em and Build 'Em preview clips
+# to appear here, knowing the gospel does not carry them. Everything else on
+# this page is a copy; THIS is the divergence, and it is injected rather than
+# hand-edited into index.html so a rebuild does not silently delete it.
+#
+# preload="none" is load-bearing, not a nicety: the two MP4s are 31MB and 39MB
+# and this is a page for children who may be on a phone connection. With
+# preload="none" the browser fetches the poster only, and a byte of video moves
+# when a child taps play. The WebM sources are listed FIRST because they are a
+# quarter of the size; Safari and iOS ignore them and take the MP4, which is
+# why the MP4s ship at all.
+#
+# The clips carry their own captured audio, so they are NOT autoplay and NOT
+# muted -- they have controls and start on a tap.
+PREVIEWS_HTML = """<section class="previews panel" aria-labelledby="previews-heading">
+    <h2 id="previews-heading">Watch a game</h2>
+    <p class="lsub">Two short clips, with sound. Tap to play.</p>
+    <div class="prow">
+      <figure class="pv">
+        <video controls playsinline preload="none"
+               poster="/assets/previews/balance-poster.png"
+               aria-label="Balance &#8217;Em gameplay clip">
+          <source src="/assets/previews/balance-preview.webm" type="video/webm">
+          <source src="/assets/previews/balance-preview.mp4" type="video/mp4">
+        </video>
+        <figcaption>Balance &#8217;Em</figcaption>
+      </figure>
+      <figure class="pv">
+        <video controls playsinline preload="none"
+               poster="/assets/previews/build-poster.png"
+               aria-label="Build &#8217;Em gameplay clip">
+          <source src="/assets/previews/build-preview.webm" type="video/webm">
+          <source src="/assets/previews/build-preview.mp4" type="video/mp4">
+        </video>
+        <figcaption>Build &#8217;Em</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  """
+
+# Written in the page's own variables (--card, --line, --ink2) so the section
+# cannot drift from the palette if the gospel restyles.
+PREVIEWS_CSS = """
+  .prow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .pv{margin:0;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;}
+  .pv video{display:block;width:100%;aspect-ratio:886/1920;background:#000;}
+  .pv figcaption{padding:11px 12px 13px;font-weight:700;font-size:14px;}
+  @media (max-width:560px){
+    .prow{grid-template-columns:1fr;}
+    .pv{border-radius:13px;}
+    .pv figcaption{font-size:13px;padding:9px 10px 11px;}
+  }
+"""
+
 
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "rumyfriendjr-build"})
@@ -73,6 +132,17 @@ def rewrite(html: str) -> str:
     html = html.replace("/assets/games/", "/assets/")
     html = html.replace("'/api/live-lobbies?jr=1'", f"'{LIVE_API}'")
     html = html.replace('href="/rankings"', f'href="{RANKINGS}"')
+
+    # Between Live games and the game grid: after what is happening now, before
+    # the list of everything.
+    anchor = '<section class="library panel"'
+    if anchor not in html:
+        raise SystemExit("the library section moved; previews have nowhere to go")
+    html = html.replace(anchor, PREVIEWS_HTML + anchor, 1)
+
+    if "</style>" not in html:
+        raise SystemExit("no </style> to append the preview rules to")
+    html = html.replace("</style>", PREVIEWS_CSS + "</style>", 1)
     return html
 
 
@@ -94,6 +164,22 @@ def check(html: str) -> None:
         problems.append("Contain 'Em is missing; the owner asked for the full gospel")
     if "jrlive" not in html:
         problems.append("the Live games container is gone")
+
+    # The one deliberate divergence, checked as hard as the copy itself.
+    for needed in (
+        'id="previews-heading"',
+        "/assets/previews/balance-preview.mp4",
+        "/assets/previews/balance-preview.webm",
+        "/assets/previews/build-preview.mp4",
+        "/assets/previews/build-preview.webm",
+        "/assets/previews/balance-poster.png",
+        "/assets/previews/build-poster.png",
+        ".pv video",
+    ):
+        if needed not in html:
+            problems.append(f"preview section incomplete: {needed} missing")
+    if 'preload="none"' not in html:
+        problems.append("previews would preload; 70MB on a child's phone connection")
 
     if problems:
         for p in problems:

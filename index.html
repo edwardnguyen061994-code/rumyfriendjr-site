@@ -104,10 +104,125 @@
     .lrow{grid-template-columns:1fr;}
     .safe{margin-top:16px;padding:16px 18px;}
   }
+
+  /* ---- Friends rail -------------------------------------------------- */
+  .jr-rail{position:fixed;left:0;top:0;bottom:0;z-index:40;display:flex;align-items:flex-start;}
+  .jr-rail-toggle{position:fixed;left:14px;top:14px;z-index:41;display:flex;align-items:center;gap:8px;
+    min-height:52px;padding:10px 16px;border:0;border-radius:999px;cursor:pointer;
+    background:#fffdf7;color:#1f2a1d;box-shadow:0 6px 20px #0002;
+    font:700 17px/1.2 "Hanken Grotesk",system-ui;}
+  .jr-rail-toggle:focus-visible{outline:3px solid #2f6b4f;outline-offset:3px;}
+  .jr-rail-icon{font-size:22px;}
+  .jr-rail-count{min-width:24px;padding:2px 7px;border-radius:999px;background:#2ec27e;color:#fff;
+    font-size:14px;font-weight:800;}
+  .jr-rail-panel{position:fixed;left:0;top:0;bottom:0;width:320px;max-width:86vw;z-index:40;
+    padding:78px 16px 20px;overflow:auto;background:#fffdf7;box-shadow:6px 0 28px #0003;}
+  .jr-rail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .jr-rail-head h2{margin:0;font:800 22px/1.2 "Fraunces",Georgia,serif;color:#1f2a1d;}
+  .jr-rail-close{min-width:44px;min-height:44px;border:0;border-radius:12px;background:transparent;
+    font-size:28px;line-height:1;cursor:pointer;color:#1f2a1d;}
+  .jr-rail-msg{margin:14px 0 0;font:500 16px/1.5 "Hanken Grotesk",system-ui;color:#4b5b47;}
+  .jr-rail-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;}
+  .jr-friend{display:flex;align-items:center;gap:12px;padding:10px;border-radius:14px;background:#fff;
+    box-shadow:0 2px 8px #0001;}
+  .jr-face{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#dfe9dc;flex:0 0 auto;}
+  .jr-initial{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;flex:0 0 auto;
+    background:#dfe9dc;color:#2f6b4f;font:800 20px/1 "Hanken Grotesk",system-ui;}
+  .jr-friend-name{font:700 17px/1.25 "Hanken Grotesk",system-ui;color:#1f2a1d;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  /* Phone: the rail would eat a 375px screen, so the button moves to the
+     thumb and the panel becomes a full-height sheet. */
+  @media (max-width:767px){
+    .jr-rail-toggle{left:14px;top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));}
+    .jr-rail-panel{width:100%;max-width:100%;padding-top:20px;
+      padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .jr-rail-panel{animation:jr-slide .18s ease-out;}
+    @keyframes jr-slide{from{transform:translateX(-12px);opacity:.6}to{transform:none;opacity:1}}
+  }
+
+  /* ---- Ranks overlay --------------------------------------------------- */
+  .jr-ranks-toggle{top:76px;}
+  .jr-ranks{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;
+    background:#1f2a1dcc;}
+  .jr-ranks-card{width:min(900px,100%);max-height:86vh;overflow:auto;-webkit-overflow-scrolling:touch;
+    padding:20px;border-radius:20px;background:#fffdf7;box-shadow:0 16px 50px #0005;}
+  .jr-ranks-head{position:sticky;top:-20px;display:flex;align-items:center;justify-content:space-between;
+    gap:12px;margin:-20px -20px 8px;padding:20px;background:#fffdf7;}
+  .jr-ranks-head h2{margin:0;font:800 24px/1.2 "Fraunces",Georgia,serif;color:#1f2a1d;}
+  .jr-ranks-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .jr-rankcard{padding:14px;border-radius:16px;background:#fff;box-shadow:0 2px 10px #0001;}
+  .jr-rankcard h3{margin:0 0 8px;font:800 18px/1.2 "Hanken Grotesk",system-ui;color:#1f2a1d;}
+  .jr-rankrow{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    padding:4px 0;font:600 16px/1.4 "Hanken Grotesk",system-ui;color:#2b3a28;}
+  .jr-rankrow .pos{flex:0 0 1.6em;color:#6b7a67;font-weight:800;}
+  .jr-rankrow .who{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .jr-rankrow .pts{flex:0 0 auto;font-variant-numeric:tabular-nums;font-weight:800;}
+  .jr-world{margin-top:8px;padding-top:8px;border-top:1px dashed #cfd9cb;
+    font:600 14px/1.4 "Hanken Grotesk",system-ui;color:#4b5b47;}
+  .jr-rankempty{margin:0;font:500 15px/1.5 "Hanken Grotesk",system-ui;color:#6b7a67;}
+  /* One column on a phone: two columns of scores at 375px is unreadable. */
+  @media (max-width:640px){ .jr-ranks-grid{grid-template-columns:1fr;} }
+  @media (max-width:767px){ .jr-ranks-toggle{top:auto;bottom:calc(78px + env(safe-area-inset-bottom,0px));} }
+
+  .prow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .pv{margin:0;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;}
+  .pv video{display:block;width:100%;aspect-ratio:886/1920;background:#000;}
+  .pv figcaption{padding:11px 12px 13px;font-weight:700;font-size:14px;}
+  @media (max-width:560px){
+    .prow{grid-template-columns:1fr;}
+    .pv{border-radius:13px;}
+    .pv figcaption{font-size:13px;padding:9px 10px 11px;}
+  }
 </style></head>
 <body>
 <div class="meadow" aria-hidden="true"></div>
 <a class="skip" href="#games">Skip to games</a>
+
+<!-- Friends rail. A persistent strip of faces rather than a hamburger: for a
+     four-year-old a hidden control is not there at all, and a face reads as
+     "people" to someone who cannot yet read the word. Below 768px it becomes a
+     single thumb-reachable button and a full-height sheet, because a rail eats
+     too much of a 375px screen. -->
+<button id="jr-ranks-toggle" class="jr-rail-toggle jr-ranks-toggle" type="button"
+        aria-haspopup="dialog" aria-controls="jr-ranks">
+  <span class="jr-rail-icon" aria-hidden="true">&#127942;</span>
+  <span class="jr-rail-label">Ranks</span>
+</button>
+
+<!-- Ranks overlay. Scrollable, two columns of games, closed by the X or by
+     Escape. It sits ON this page rather than navigating away, because sending
+     a six-year-old to another page to see a score and then expecting them to
+     find their way back is how you lose them. -->
+<div id="jr-ranks" class="jr-ranks" role="dialog" aria-modal="true" aria-labelledby="jr-ranks-title" hidden>
+  <div class="jr-ranks-card">
+    <div class="jr-ranks-head">
+      <h2 id="jr-ranks-title">Top scores</h2>
+      <button id="jr-ranks-close" class="jr-rail-close" type="button" aria-label="Close top scores">&times;</button>
+    </div>
+    <p id="jr-ranks-msg" class="jr-rail-msg">Loading&hellip;</p>
+    <div id="jr-ranks-grid" class="jr-ranks-grid"></div>
+  </div>
+</div>
+
+<div id="jr-rail" class="jr-rail" data-state="closed">
+  <button id="jr-rail-toggle" class="jr-rail-toggle" type="button"
+          aria-expanded="false" aria-controls="jr-rail-panel">
+    <span class="jr-rail-icon" aria-hidden="true">&#128101;</span>
+    <span class="jr-rail-label">Friends</span>
+    <span id="jr-rail-count" class="jr-rail-count" hidden></span>
+  </button>
+  <div id="jr-rail-panel" class="jr-rail-panel" role="dialog" aria-label="Your friends" hidden>
+    <div class="jr-rail-head">
+      <h2 id="jr-rail-title">Friends</h2>
+      <button id="jr-rail-close" class="jr-rail-close" type="button" aria-label="Close friends">&times;</button>
+    </div>
+    <p id="jr-rail-msg" class="jr-rail-msg">Loading&hellip;</p>
+    <ul id="jr-rail-list" class="jr-rail-list"></ul>
+  </div>
+</div>
 
 <div class="herowrap"><div class="hero">
   <video id="jrhero" muted loop playsinline preload="auto"
@@ -124,6 +239,31 @@
     <div id="jrlive" class="lrow"><p class="lnone">Looking for live games…</p></div>
   </section>
 
+  <section class="previews panel" aria-labelledby="previews-heading">
+    <h2 id="previews-heading">Watch a game</h2>
+    <p class="lsub">Two short clips, with sound. Tap to play.</p>
+    <div class="prow">
+      <figure class="pv">
+        <video controls playsinline preload="none"
+               poster="/assets/previews/balance-poster.png"
+               aria-label="Balance &#8217;Em gameplay clip">
+          <source src="/assets/previews/balance-preview.webm" type="video/webm">
+          <source src="/assets/previews/balance-preview.mp4" type="video/mp4">
+        </video>
+        <figcaption>Balance &#8217;Em</figcaption>
+      </figure>
+      <figure class="pv">
+        <video controls playsinline preload="none"
+               poster="/assets/previews/build-poster.png"
+               aria-label="Build &#8217;Em gameplay clip">
+          <source src="/assets/previews/build-preview.webm" type="video/webm">
+          <source src="/assets/previews/build-preview.mp4" type="video/mp4">
+        </video>
+        <figcaption>Build &#8217;Em</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="library panel" aria-labelledby="games-heading">
     <h1 id="games-heading">RumyFriend Jr</h1>
     <p class="sub">29 games for ages 4 to 12.</p>
@@ -136,11 +276,215 @@
     Meet. Friends can be added in the app or with a parent's approval.
   </div>
 
-  <footer><span>RumyFriend Jr</span><a href="https://jr.rumyfriend.com/rankings">JR Rankings</a><a href="/privacy-and-terms">Privacy &amp; Terms</a></footer>
+  <footer><span>RumyFriend Jr</span><a href="/privacy-and-terms">Privacy &amp; Terms</a></footer>
 </main>
 
 <script>
 (function(){
+  // ---- Who is looking at this page.
+  //
+  // jr.rumyfriend.com carries no Firebase. It does not need to: rf_id is
+  // written with domain=.rumyfriend.com, so the cookie the Meet app sets on
+  // sign-in already arrives here. It is display-only and unsigned — good
+  // enough to greet a child and draw their friends, and trusted for nothing
+  // else. Every list below comes from the worker, which reads the SIGNED
+  // cookie on its side.
+  //
+  // An adult who lands here simply sees the Jr page. That is intended: this
+  // host is the child's whole product, not a secret.
+  function rfId(){
+    try{
+      var cs = document.cookie ? document.cookie.split(";") : [];
+      for (var i=0;i<cs.length;i++){
+        var c = cs[i];
+        while (c.charAt(0) === " ") c = c.slice(1);
+        if (c.indexOf("rf_id=") === 0)
+          return JSON.parse(decodeURIComponent(c.slice(6)));
+      }
+    }catch(e){ /* unreadable or blocked cookie: stay signed-out */ }
+    return null;
+  }
+
+  var me = rfId();
+
+  // ---- Greet by name, when we know it.
+  try{
+    if (me && me.name) {
+      var h = document.getElementById("live-heading");
+      if (h) h.textContent = "Live games, " + me.name;
+    }
+  }catch(e){}
+
+  // ---- Friends rail.
+  var rail = document.getElementById("jr-rail");
+  var toggle = document.getElementById("jr-rail-toggle");
+  var panel = document.getElementById("jr-rail-panel");
+  var closeBtn = document.getElementById("jr-rail-close");
+  var msg = document.getElementById("jr-rail-msg");
+  var list = document.getElementById("jr-rail-list");
+  var count = document.getElementById("jr-rail-count");
+  var loaded = false;
+
+  function setOpen(open){
+    if (!rail || !panel || !toggle) return;
+    rail.setAttribute("data-state", open ? "open" : "closed");
+    panel.hidden = !open;
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open) { load(); if (closeBtn) closeBtn.focus(); }
+    else toggle.focus();
+  }
+
+  function initial(name){
+    var t = (name || "").trim();
+    return t ? t.charAt(0).toUpperCase() : "?";
+  }
+
+  function draw(friends){
+    if (!list || !msg) return;
+    list.textContent = "";
+    if (!friends.length) {
+      msg.textContent = "No friends yet. Ask a parent to help you add one.";
+      return;
+    }
+    msg.textContent = "";
+    for (var i=0;i<friends.length;i++){
+      var f = friends[i];
+      var li = document.createElement("li");
+      li.className = "jr-friend";
+      if (f.photo) {
+        var img = document.createElement("img");
+        img.className = "jr-face";
+        img.src = f.photo;
+        img.alt = "";
+        img.loading = "lazy";
+        li.appendChild(img);
+      } else {
+        var sp = document.createElement("span");
+        sp.className = "jr-initial";
+        sp.setAttribute("aria-hidden", "true");
+        sp.textContent = initial(f.name);
+        li.appendChild(sp);
+      }
+      var nm = document.createElement("span");
+      nm.className = "jr-friend-name";
+      // A friend who has never submitted a score has no name on record here.
+      nm.textContent = f.name || "Your friend";
+      li.appendChild(nm);
+      list.appendChild(li);
+    }
+    if (count) { count.textContent = String(friends.length); count.hidden = false; }
+  }
+
+  function load(){
+    if (loaded || !msg) return;
+    loaded = true;
+    if (!me) {
+      msg.textContent = "Sign in to see your friends.";
+      return;
+    }
+    fetch("/api/jr/friends", { credentials: "include" })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || d.ok !== true) { msg.textContent = "Sign in to see your friends."; return; }
+        draw(Array.isArray(d.friends) ? d.friends : []);
+      })
+      .catch(function(){
+        loaded = false;   // a dropped request should not permanently empty the drawer
+        msg.textContent = "Could not load your friends. Try again.";
+      });
+  }
+
+  // ---- Ranks overlay.
+  var ranks = document.getElementById("jr-ranks");
+  var ranksToggle = document.getElementById("jr-ranks-toggle");
+  var ranksClose = document.getElementById("jr-ranks-close");
+  var ranksMsg = document.getElementById("jr-ranks-msg");
+  var ranksGrid = document.getElementById("jr-ranks-grid");
+  var ranksLoaded = false;
+
+  function ranksOpen(open){
+    if (!ranks || !ranksToggle) return;
+    ranks.hidden = !open;
+    if (open) { loadRanks(); if (ranksClose) ranksClose.focus(); }
+    else ranksToggle.focus();
+  }
+
+  function row(pos, who, pts){
+    var li = document.createElement("div");
+    li.className = "jr-rankrow";
+    var a = document.createElement("span"); a.className = "pos"; a.textContent = pos + ".";
+    var b = document.createElement("span"); b.className = "who"; b.textContent = who;
+    var c = document.createElement("span"); c.className = "pts";
+    c.textContent = String(pts).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    li.appendChild(a); li.appendChild(b); li.appendChild(c);
+    return li;
+  }
+
+  function drawRanks(games){
+    if (!ranksGrid || !ranksMsg) return;
+    ranksGrid.textContent = "";
+    var shown = 0;
+    for (var i=0;i<games.length;i++){
+      var g = games[i];
+      var card = document.createElement("section");
+      card.className = "jr-rankcard";
+      var h = document.createElement("h3");
+      h.textContent = g.name;
+      card.appendChild(h);
+      if (g.rows && g.rows.length) {
+        for (var j=0;j<g.rows.length;j++)
+          card.appendChild(row(j+1, g.rows[j].name, g.rows[j].score));
+      } else {
+        var p = document.createElement("p");
+        p.className = "jr-rankempty";
+        p.textContent = "No scores yet. Be the first!";
+        card.appendChild(p);
+      }
+      if (g.worldBest != null) {
+        var w = document.createElement("p");
+        w.className = "jr-world";
+        // No name and no link: a bar to clear, not a person to go and find.
+        w.textContent = "Best score by anyone: " +
+          String(g.worldBest).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        card.appendChild(w);
+      }
+      ranksGrid.appendChild(card);
+      shown++;
+    }
+    ranksMsg.textContent = shown ? "" : "No games to show yet.";
+  }
+
+  function loadRanks(){
+    if (ranksLoaded || !ranksMsg) return;
+    ranksLoaded = true;
+    fetch("/api/jr/ranks", { credentials: "include" })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        drawRanks(d && Array.isArray(d.games) ? d.games : []);
+      })
+      .catch(function(){
+        ranksLoaded = false;
+        ranksMsg.textContent = "Could not load top scores. Try again.";
+      });
+  }
+
+  if (ranksToggle) ranksToggle.addEventListener("click", function(){ ranksOpen(true); });
+  if (ranksClose) ranksClose.addEventListener("click", function(){ ranksOpen(false); });
+  if (ranks) ranks.addEventListener("click", function(e){
+    // Tapping the dark surround closes it, which is what a child tries first.
+    if (e.target === ranks) ranksOpen(false);
+  });
+
+  if (toggle) toggle.addEventListener("click", function(){
+    setOpen(panel ? panel.hidden : true);
+  });
+  if (closeBtn) closeBtn.addEventListener("click", function(){ setOpen(false); });
+  document.addEventListener("keydown", function(e){
+    if (e.key !== "Escape") return;
+    if (ranks && !ranks.hidden) { ranksOpen(false); return; }
+    if (panel && !panel.hidden) setOpen(false);
+  });
+
   // ---- Live games.
   //
   // Same book the adult page reads, so a child joins the grown-ups' room rather
