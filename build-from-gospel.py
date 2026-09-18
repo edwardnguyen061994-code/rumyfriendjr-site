@@ -114,6 +114,32 @@ CHAT_NEW_TAB = """/* rumyfriendjr.com: chat opens in a new tab. See build-from-g
     }"""
 
 
+# ---------------------------------------------------------------------------
+# RETIRED 2026-09-18. THIS SCRIPT NO LONGER RUNS, ON PURPOSE.
+#
+# rumyfriendjr.com now REDIRECTS to jr.rumyfriend.com instead of serving a
+# clone, because two things could never work on a different registrable
+# domain: the session cookies (`domain=.rumyfriend.com; SameSite=Lax`) never
+# reach it, so a signed-in child was told to sign in again; and
+# /friend-messenger answers `frame-ancestors https://jr.rumyfriend.com`, so
+# friend chat -- and the friends list that arrives through that same frame --
+# was refused by the browser.
+#
+# Running this again would overwrite index.html with the clone and quietly
+# bring both faults back, so it refuses. Everything below is kept because it is
+# the record of how the clone was built and what had to be rewritten to make it
+# work at all: the /api/ rewrites, the asset sync, the game-count floor, the
+# chat new-tab workaround. If a standalone Jr site is ever wanted again, start
+# from here and delete this guard deliberately.
+def _retired() -> None:
+    raise SystemExit(
+        "build-from-gospel.py is retired: rumyfriendjr.com redirects to "
+        "jr.rumyfriend.com now (see index.html). Running this would overwrite "
+        "the redirect with a clone whose sign-in and chat cannot work. Delete "
+        "this guard on purpose if you really want the clone back."
+    )
+
+
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "rumyfriendjr-build"})
     with urllib.request.urlopen(req, timeout=60) as r:
@@ -292,6 +318,7 @@ def check(html: str) -> None:
 
 
 def main() -> None:
+    _retired()
     html = rewrite(fetch(GOSPEL))
     for ref, size in sync_assets(html):
         print(f"  fetched assets/{ref}  {size} bytes")
