@@ -54,6 +54,9 @@ RANKINGS = "https://jr.rumyfriend.com/rankings"
 # exactly why the count is not hard-coded any more -- see games_in().
 MIN_GAMES = 29
 
+# The count of the last successful build, written by main(). See check().
+COUNT_FILE = ".gospel-game-count"
+
 
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "rumyfriendjr-build"})
@@ -167,14 +170,39 @@ def check(html: str) -> None:
         problems.append("the Live games container is gone")
 
     # Every game the page SAYS it has must actually be linked in the page.
+    #
+    # THE MAP IS CUT OUT OF THE PAGE BEFORE LOOKING. `origins` is parsed from
+    # the `var G = {...}` blob, which is itself part of `html`, so testing
+    # `host in html` asked whether the map contains what the map contains --
+    # always true. Proved dead: with Rally 'Em's card, poster and link all
+    # deleted and only the map left, the old check still printed
+    # "30 games, all linked". Now the map's own span is removed first, so the
+    # question is the one that matters: is this game reachable from the page?
     game_map = games_in(html)
     names, origins = game_map.get("names", {}), game_map.get("origins", {})
-    if len(names) < MIN_GAMES:
-        problems.append(f"only {len(names)} games in the page's own map")
+    body = html[: html.find("var G = ")] + html[html.find("};", html.find("var G = ")) :]
     for key, origin in origins.items():
         host = re.match(r"https://([a-z0-9-]+)\.", origin)
-        if not host or host.group(1) not in html:
+        if not host or host.group(1) not in body:
             problems.append(f"{names.get(key, key)} is in the map but not linked")
+
+    # A FLOOR THAT RISES WITH THE GOSPEL. A hand-typed 29 let a one-game
+    # regression publish clean after the gospel reached 30: removing Rally 'Em
+    # entirely printed "ok: 29 games". The last successful build's count is
+    # recorded beside this script and becomes the new floor, so the number can
+    # only go up by itself -- and a genuine removal upstream has to be accepted
+    # deliberately by editing that file.
+    floor = MIN_GAMES
+    if os.path.exists(COUNT_FILE):
+        try:
+            floor = max(floor, int(open(COUNT_FILE).read().strip()))
+        except ValueError:
+            pass
+    if len(names) < floor:
+        problems.append(
+            f"only {len(names)} games in the page's own map; last build had {floor}. "
+            f"If the gospel really dropped one, lower {COUNT_FILE} on purpose."
+        )
 
     # The divergences are gone; assert they stay gone, or "same as the gospel"
     # quietly stops being true again.
@@ -203,6 +231,8 @@ def main() -> None:
     check(html)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
+    with open(COUNT_FILE, "w", encoding="utf-8") as f:
+        f.write(str(len(games_in(html).get("names", {}))))
     print(f"wrote {OUT}  {len(html)} bytes")
 
 
