@@ -546,19 +546,18 @@
     signIn.hidden = true;
     loaded = true;
     msg.textContent = "Connecting to your friends…";
-    chatRequest = crypto.randomUUID();
-    chatFrame = document.createElement("iframe");
-    chatFrame.id = "jr-chat-frame"; chatFrame.className = "jr-chat-frame";
-    chatFrame.title = "Friend chat"; chatFrame.setAttribute("aria-hidden","true");
-    chatFrame.tabIndex = -1; chatFrame.dataset.state = "closed";
-    chatFrame.src = CHAT_ORIGIN + "/friend-messenger";
-    chatFrame.addEventListener("load",function(){
-      tellChat("rf-friends-init",{uid:uid}); friendsVisibility();
-    });
-    document.body.appendChild(chatFrame);
-    chatTimer = setTimeout(function(){
-      clearChat(); msg.textContent = "Could not connect to chat. Close Friends and try again.";
-    },15000);
+    /* rumyfriendjr.com: chat opens in a new tab. See build-from-gospel.py. */
+    msg.textContent = "Chat opens in a new tab.";
+    var openChat = document.createElement("a");
+    openChat.className = "jr-friends-signin";
+    openChat.href = CHAT_ORIGIN + "/friend-messenger";
+    openChat.target = "_blank";
+    openChat.rel = "noopener noreferrer";
+    openChat.textContent = "Open chat";
+    if (!msg.parentNode.querySelector(".jr-open-chat")) {
+      openChat.classList.add("jr-open-chat");
+      msg.parentNode.insertBefore(openChat, msg.nextSibling);
+    }
   }
   window.addEventListener("message",function(event){
     if (!chatFrame || event.origin !== CHAT_ORIGIN || event.source !== chatFrame.contentWindow) return;

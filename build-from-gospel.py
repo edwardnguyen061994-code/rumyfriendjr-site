@@ -58,6 +58,62 @@ MIN_GAMES = 29
 COUNT_FILE = ".gospel-game-count"
 
 
+# ---------------------------------------------------------------------------
+# THE ONE DELIBERATE DIVERGENCE: chat opens in a tab here, not in a frame.
+#
+# The gospel embeds the messenger:  chatFrame.src = CHAT_ORIGIN +
+# "/friend-messenger", and the friends LIST arrives back through that frame by
+# postMessage. It cannot work on this host. rumyfriend.com/friend-messenger
+# answers with
+#
+#     content-security-policy: ... frame-ancestors https://jr.rumyfriend.com
+#
+# and www.rumyfriendjr.com is not in that list, so the browser refuses the
+# frame -- measured from both hosts, and only this one is refused. A signed-in
+# child would watch "Connecting to your friends..." for fifteen seconds and then
+# read "Could not connect to chat."
+#
+# A new tab is a TOP-LEVEL navigation, which that CSP does not restrict, so the
+# messenger itself works there. What a tab cannot do is post the friends list
+# back into this page, so the panel says plainly what it can do rather than
+# pretending to load a list that will never arrive.
+#
+# THE RIGHT FIX IS STILL THE HEADER -- adding this origin to frame-ancestors on
+# the Worker that serves /friend-messenger. That Worker's source is not in any
+# repository on this machine (searched ~/dev; the route does not exist in
+# ~/dev/SeeEm on any branch, and deploying that checkout would 404 the endpoint
+# for BOTH sites). Until somebody with the source makes that one-line change,
+# this keeps chat reachable instead of broken.
+CHAT_IFRAME = (
+    'chatRequest = crypto.randomUUID();\n'
+    '    chatFrame = document.createElement("iframe");\n'
+    '    chatFrame.id = "jr-chat-frame"; chatFrame.className = "jr-chat-frame";\n'
+    '    chatFrame.title = "Friend chat"; chatFrame.setAttribute("aria-hidden","true");\n'
+    '    chatFrame.tabIndex = -1; chatFrame.dataset.state = "closed";\n'
+    '    chatFrame.src = CHAT_ORIGIN + "/friend-messenger";\n'
+    '    chatFrame.addEventListener("load",function(){\n'
+    '      tellChat("rf-friends-init",{uid:uid}); friendsVisibility();\n'
+    '    });\n'
+    '    document.body.appendChild(chatFrame);\n'
+    '    chatTimer = setTimeout(function(){\n'
+    '      clearChat(); msg.textContent = "Could not connect to chat. Close Friends and try again.";\n'
+    '    },15000);'
+)
+
+CHAT_NEW_TAB = """/* rumyfriendjr.com: chat opens in a new tab. See build-from-gospel.py. */
+    msg.textContent = "Chat opens in a new tab.";
+    var openChat = document.createElement("a");
+    openChat.className = "jr-friends-signin";
+    openChat.href = CHAT_ORIGIN + "/friend-messenger";
+    openChat.target = "_blank";
+    openChat.rel = "noopener noreferrer";
+    openChat.textContent = "Open chat";
+    if (!msg.parentNode.querySelector(".jr-open-chat")) {
+      openChat.classList.add("jr-open-chat");
+      msg.parentNode.insertBefore(openChat, msg.nextSibling);
+    }"""
+
+
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "rumyfriendjr-build"})
     with urllib.request.urlopen(req, timeout=60) as r:
@@ -102,6 +158,13 @@ def rewrite(html: str) -> str:
     # names. The list version broke the day the gospel grew Friends and Ranks.
     html = re.sub(r"""(["'])/api/""", r"\1" + GOSPEL.rstrip("/") + "/api/", html)
     html = html.replace('href="/rankings"', f'href="{RANKINGS}"')
+
+    if CHAT_IFRAME not in html:
+        raise SystemExit(
+            "the chat iframe block moved; the new-tab replacement would be a "
+            "no-op and a signed-in child would get the blocked frame again"
+        )
+    html = html.replace(CHAT_IFRAME, CHAT_NEW_TAB, 1)
     return html
 
 
@@ -212,6 +275,10 @@ def check(html: str) -> None:
     # gospel's own CSS uses !important ten times, including the
     # `display:none!important` that is ITS fix for the dialog bug this patch
     # used to work around. Banning the substring rejected a faithful copy.
+    if "/friend-messenger" in html and 'chatFrame.src' in html:
+        problems.append("the chat iframe survived; it is blocked by CSP on this host")
+    if "jr-open-chat" not in html:
+        problems.append("the open-chat-in-a-tab link is missing")
     if "[hidden]{display:none !important;}" in html:
         problems.append(
             "the local [hidden] patch is back; the gospel fixed this itself"
