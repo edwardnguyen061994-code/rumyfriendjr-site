@@ -85,7 +85,7 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 <p>Two things are still being worked on, and we would rather name them than leave you to discover them:</p>
 <ul>
   <li><strong>We do not yet verify that you are the parent.</strong> Linking a child&rsquo;s account records your agreement, but it does not yet check your identity through one of the approved methods. Until it does, we do not treat that record as verified parental consent, and we say so here rather than implying otherwise.</li>
-  <li><strong>Messages are not reviewed by a person before they are delivered.</strong> We block links, email addresses and phone numbers from a child&rsquo;s conversation automatically, and we read every report &mdash; but nothing screens an ordinary sentence in advance.</li>
+  <li>Outgoing text has limited automated checks for links, email addresses, phone-number patterns, message length and listed objectionable terms. These checks cannot identify every harmful sentence, grooming attempt or abusive interaction. Messages are not reviewed by a person before delivery. Safety reports are a separate process.</li>
 </ul>
 </section>
 
@@ -94,12 +94,11 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 <p>RumyFriendJr is intended for children aged 4 to 12. A parent or guardian sets the account up, and this notice explains what we collect from a child, why, who receives it, and how you control it.</p>
 
 <h3>What a child&rsquo;s account holds</h3>
+<p>Your child uses a player name in Jr. When Google or Apple sign-in is used, Firebase Authentication also receives the provider's account identifier, email address and account name; that name may include a surname or full name even if Jr displays a player name. We store friend connections and connection codes, messages your child sends or receives, notification/device identifiers, game content and scores, online/activity status, and safety reports with the account and message details needed to handle them. If a parent enables profile photos, the app can collect and store selected profile photos in the child's private profile record for the allowed profile displays. This is different from a child chat: child conversations are text-only, and the profile-photo permission does not enable chat attachments.</p>
 <table>
   <thead><tr><th>Information</th><th>Why we hold it</th></tr></thead>
   <tbody>
-    <tr><td>A player name (first name only)</td><td>So friends can recognise your child in a game and in a message.</td></tr>
     <tr><td>An account identifier created at sign-in</td><td>To sign your child in and attach their games and friends to the right account.</td></tr>
-    <tr><td>An avatar</td><td>Shown in place of a photograph. Children who are not confirmed friends see an illustrated likeness, never a photograph.</td></tr>
     <tr><td>Friend connections and connection codes</td><td>To run the friends list, and only for the friends a parent has permitted.</td></tr>
     <tr><td>Messages your child sends and receives</td><td>To deliver them, and to act on a safety report.</td></tr>
     <tr><td>A notification token</td><td>To send your child&rsquo;s device a notification. It is stored privately and is not readable by other members.</td></tr>
@@ -107,28 +106,25 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 </table>
 
 <h3>What we do not collect</h3>
-<ul>
-  <li><strong>No location.</strong> The Jr app does not ask for location permission, and the permission is removed from the Jr build on both iOS and Android. We do not calculate distances between friends and we do not build a location profile for a child.</li>
-  <li><strong>No advertising.</strong> There is no advertising in RumyFriendJr, no advertising identifier, and no advertising software in the app.</li>
-  <li><strong>No analytics product.</strong> No analytics or crash-reporting software is included in the app.</li>
-  <li><strong>No date of birth, surname, phone number or email address</strong> is collected from the child during Jr setup.</li>
-</ul>
+<p>Jr does not request native device-location permission or use GPS to calculate distances between friends. Sign-in and hosting providers receive connection information such as an IP address; Google Sign-In uses IP-derived general location for fraud prevention. This is different from access to the child's precise device location.</p>
+<p>We do not use a child's account, messages, photos or location for marketing or advertising, and we do not sell that information. Our confirmed first-party use and the named native SDK declarations do not involve tracking for targeted advertising or advertising measurement across other services.</p>
+<p>Jr uses Firebase, Google Sign-In and Google ML Kit. These components collect sign-in/account information and device, app, installation, usage, performance and diagnostic information for service operation and analytics. Google Sign-In's SDK disclosure includes name, email, phone number and coarse location; this does not mean Jr provides a phone-entry form. ML Kit processes face-image inputs and results on the device, but separately sends technical and usage telemetry. The app may later upload a selected profile photo as described above. Some identity and usage records are linked to an account or device; the documented SDK performance and diagnostic streams are unlinked. The absence of a separate Firebase Analytics or Crashlytics product is not an absence of all SDK analytics or diagnostics.</p>
+<p>Jr profile setup asks for a player name and does not ask for a date of birth, surname, phone number or email address. Existing email/password accounts can enter their email address and password to sign in; the email must already be verified. Google or Apple sign-in collection is a separate account flow and is described above.</p>
 
 <h3>The games, and what they see</h3>
 <p>Each game is a separate web page that the app opens. <strong>When your child opens a game, that game is told the account identifier and the player name</strong>, so it can greet them and record a score against the right player. The child&rsquo;s photograph is never passed to a game.</p>
 <p>Some games show a scoreboard, and a score recorded under a player name can be visible to other players of that game.</p>
 
 <h3>Who else receives information</h3>
-<p>We use Google Firebase to sign accounts in and to store the information above, and to deliver notifications. Our games and website are delivered by hosting and content-delivery providers, which process ordinary connection information such as an IP address in order to serve and protect the service. We do not sell a child&rsquo;s information, and we do not share it for advertising.</p>
+<p>Google and Apple provide sign-in, and Firebase stores authentication, account, friend, message, profile-photo and other app records and supports notifications. Google Sign-In and ML Kit also process the technical and usage information described above under their SDK disclosures. Hosting and content-delivery providers, including Cloudflare, receive ordinary request and connection information to deliver and protect the games and website. Game services receive the account/player information and game records needed for play and scores. We do not sell a child's information or provide their account or content records for marketing or advertising.</p>
 
 <h3>Your rights as a parent</h3>
 <p>You can ask us to show you what we hold about your child, ask us to delete it, or withdraw your permission for us to collect it at all. There is never a charge for this, and you never have to install anything to make the request.</p>
 <p><a href="/delete/">How to request review, deletion or withdrawal &rarr;</a></p>
-<p>If you withdraw permission, we stop the collection it covered. If you ask for deletion, we delete the child&rsquo;s account and the information held against it. We may keep a limited record where the law requires it or where it is needed to handle a safety report or keep a blocked contact blocked, and we will tell you what we kept and why. A message already delivered to another person&rsquo;s device is on that device, and deleting an account here cannot reach into it.</p>
+<p>Contact us to request access, correction, deletion or withdrawal of a permission. The app's account-deletion flow attempts to remove the sign-in and the account records it can reach and records a deletion request for remaining work. Some message, game, report or media records can remain outside that client operation. Using the button does not immediately delete every stored record, and changing a permission does not remove information already stored. Contact us about the scope and status of your request.</p>
 
 <h3>How long we keep it</h3>
-<p>We keep a child&rsquo;s information for as long as the account exists. When you ask us to delete the account we delete it, and you do not have to wait for a scheduled clear-out for that to happen.</p>
-<p>We keep a limited record for longer in two cases only: where the law requires it, and where a safety report needs it while that report is being dealt with. We will tell you what was kept and why. We are not going to quote you a fixed number of days here, because we would be inventing it.</p>
+<p>Contact us to request access, correction, deletion or withdrawal of a permission. The app's account-deletion flow attempts to remove the sign-in and the account records it can reach and records a deletion request for remaining work. Some message, game, report or media records can remain outside that client operation. Using the button does not immediately delete every stored record, and changing a permission does not remove information already stored. Contact us about the scope and status of your request.</p>
 
 <h3>Changes</h3>
 <p>If we change what we collect, why, or who receives it, we will give clear notice. Where a change requires fresh parental permission, the new collection will not begin until we have it.</p>
@@ -144,7 +140,7 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 <p>Some games may place your child in a session with other players, including adults. Playing a game alongside somebody does not by itself allow them to message your child privately or to see your child&rsquo;s profile.</p>
 
 <h3>2. Parent controls</h3>
-<p>You link your child&rsquo;s account from the parent area, and from there you choose which optional features are available to them. <strong>Photo sharing and location are off until you turn them on.</strong> You can change any of these at any time, and turning one off takes effect immediately, including for conversations already open.</p>
+<p>The parent area lets you change the available permission choices, including messaging and profile photos. Age and app restrictions still apply when a permission is enabled. Jr does not offer device-location or distance features, and a child conversation remains text-only: voice, video, attachments, group messages and location sharing are unavailable there. A parent link or permission switch is not a verification of the parent's identity.</p>
 <p>Parent controls and safety reporting never require a paid subscription.</p>
 
 <h3>3. Player names</h3>
@@ -158,7 +154,7 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 <h3>5. What is not built yet</h3>
 <p>We would rather list these than let the sections above imply them:</p>
 <ul>
-  <li>There is <strong>no automated message filtering and no human moderation team</strong> reviewing messages as they are sent. Safety reports are read by us and acted on; they are not screened in advance.</li>
+  <li>Outgoing text has limited automated checks for links, email addresses, phone-number patterns, message length and listed objectionable terms. These checks cannot identify every harmful sentence, grooming attempt or abusive interaction. Messages are not reviewed by a person before delivery. Safety reports are a separate process.</li>
   <li>There is <strong>no separate approval for individual adults</strong>, no separate teen category, and no activity log for parents.</li>
   <li>There is <strong>no subscription</strong>. RumyFriendJr has nothing to buy.</li>
 </ul>
@@ -169,7 +165,8 @@ display:flex;flex-wrap:wrap;gap:8px 18px}
 <p>We may remove content or restrict an account, and we may preserve or report information where the law requires it. No system prevents every harmful interaction. <strong>RumyFriendJr is not an emergency service</strong> &mdash; if a child is in immediate danger, contact your local emergency number.</p>
 
 <h3>7. Ending it</h3>
-<p>You can delete your child&rsquo;s account at any time, and you do not need to reinstall anything to do it. We may restrict an account for safety, fraud or a breach of these Terms, and we will explain why where doing so does not compromise another child&rsquo;s privacy or an investigation.</p>
+<p>Contact us to request access, correction, deletion or withdrawal of a permission. The app's account-deletion flow attempts to remove the sign-in and the account records it can reach and records a deletion request for remaining work. Some message, game, report or media records can remain outside that client operation. Using the button does not immediately delete every stored record, and changing a permission does not remove information already stored. Contact us about the scope and status of your request.</p>
+<p>We may restrict an account for safety, fraud or a breach of these Terms, and we will explain why where doing so does not compromise another child&rsquo;s privacy or an investigation.</p>
 
 <h3>8. Legal</h3>
 <p>We own the app and the games; your child may use them for ordinary personal play. Nothing here removes rights that cannot lawfully be removed, including consumer and children&rsquo;s rights, and nothing here transfers our legal duties to you or your child.</p>
